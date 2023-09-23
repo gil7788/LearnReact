@@ -3,11 +3,23 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import colors from './components/data/color-data.json';
+import ColorProvider from './components/ColorProvider';
+import { CheckboxProvider } from './components/CheckboxContext.tsx'; 
+
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
+
+
+export const ColorContext = React.createContext();
 root.render(
+
   <React.StrictMode>
-    <App />
+    <ColorProvider colors={colors}>
+      <CheckboxProvider>
+        <App />
+      </CheckboxProvider>
+    </ColorProvider>
   </React.StrictMode>
 );
 

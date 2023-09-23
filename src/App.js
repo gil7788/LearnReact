@@ -1,24 +1,33 @@
-import logo from './logo.svg';
-import './App.css';
+import Menu from './components/Menu';
+import data from './components/data/recipes.json';
+import StarRating from './components/StarRating';
+import ColorList from './components/ColorList';
+import AddColorForm from './components/ColorForm';
+import ColorProvider from './components/ColorProvider';
+import { CheckboxProvider, useCheckboxContext } from './components/CheckboxContext.tsx';
+import CheckBox from './components/CheckBox.tsx';
+
 
 function App() {
+  const { isSelected, onChange } = useCheckboxContext();
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <Menu recipes={data} />
+      <StarRating totalStars={5} />
+      <ColorProvider>
+        <AddColorForm />
+        <ColorList />
+      </ColorProvider>
+
+      
+      <CheckboxProvider>
+        <CheckBox 
+          label="Toggle Juggling patterns"
+          checked={isSelected}
+          onChange={onChange}
+        />
+      </CheckboxProvider>
+    </>
   );
 }
 
