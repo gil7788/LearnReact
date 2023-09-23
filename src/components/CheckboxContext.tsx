@@ -9,11 +9,15 @@ export function useCheckboxContext() {
 export function CheckboxProvider({ children }) {
   const [isSelected, setIsSelected] = useState(false);
 
+// const onChange = () => {
+//     setIsSelected((prevSelected) => {
+//         console.log("onChange Checkbox State:", !prevSelected);
+//         return !prevSelected;
+//         });
+// };
+
 const onChange = () => {
-    setIsSelected((prevSelected) => {
-        console.log("onChange Checkbox State:", !prevSelected);
-        return !prevSelected;
-        });
+    setIsSelected(!isSelected);
 };
 
   return (

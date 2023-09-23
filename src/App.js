@@ -6,6 +6,7 @@ import AddColorForm from './components/ColorForm';
 import ColorProvider from './components/ColorProvider';
 import { CheckboxProvider, useCheckboxContext } from './components/CheckboxContext.tsx';
 import CheckBox from './components/CheckBox.tsx';
+import TextInput from './components/TextInput.tsx';
 
 
 function App() {
@@ -27,6 +28,7 @@ function App() {
           onChange={onChange}
         />
       </CheckboxProvider>
+      <TextInput />
     </>
   );
 }
