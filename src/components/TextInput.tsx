@@ -1,27 +1,20 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 
-export default function TextInput(props: any) {
-    const { label } = props;
+interface TextInputProps {
+    label: string;
+    onTextSubmit: (text: string) => void;
+}
+
+
+export default function TextInput(props: TextInputProps) {
+    const { label, onTextSubmit } = props;
     const [text, setText] = useState("");
-    const [phrase, setPhrase] = useState("");
-    // const [isFocused, setIsFocused] = useState(false);
-    // const [isTouched, setIsTouched] = useState(false);
-    // const [isDirty, setIsDirty] = useState(false);
+    
     
     const createPhrase = () => {
-        setPhrase(text);
+        onTextSubmit(text);
         setText("");
     }
-
-    useEffect(() => {
-        console.log("TextInput useEffect called. text:", text);
-        console.log("text: ", text);
-    } , [text]);
-
-    useEffect(() => {
-        console.log("TextInput useEffect called. phrase:", phrase);
-        console.log("phrase: ", phrase);
-    }, [phrase]);
 
     return (
         <>

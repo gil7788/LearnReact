@@ -7,10 +7,20 @@ import ColorProvider from './components/ColorProvider';
 import { CheckboxProvider, useCheckboxContext } from './components/CheckboxContext.tsx';
 import CheckBox from './components/CheckBox.tsx';
 import TextInput from './components/TextInput.tsx';
+import GitHubUser from './components/GitHubUser.tsx';
+import FakeUsers from './components/FakeUsers.tsx';
 
+import { useState } from 'react';
 
 function App() {
   const { isSelected, onChange } = useCheckboxContext();
+  const [searchUser, setSearchUser] = useState('');
+
+  const onTextSubmit = (text: string) => {
+    setSearchUser(text);
+    console.log(text);
+  }
+
   return (
     <>
       <Menu recipes={data} />
@@ -28,7 +38,9 @@ function App() {
           onChange={onChange}
         />
       </CheckboxProvider>
-      <TextInput />
+      < TextInput label='User name' onTextSubmit={onTextSubmit}/>
+      <GitHubUser login={searchUser} />
+      <FakeUsers amount={1000}/>
     </>
   );
 }

@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState } from "react";
+import React, { createContext, useContext, useReducer, useState } from "react";
 
 const CheckboxContext = createContext();
 
@@ -7,21 +7,10 @@ export function useCheckboxContext() {
 }
 
 export function CheckboxProvider({ children }) {
-  const [isSelected, setIsSelected] = useState(false);
-
-// const onChange = () => {
-//     setIsSelected((prevSelected) => {
-//         console.log("onChange Checkbox State:", !prevSelected);
-//         return !prevSelected;
-//         });
-// };
-
-const onChange = () => {
-    setIsSelected(!isSelected);
-};
+  const [isSelected, toggle] = useReducer(isSelected => !isSelected, false);
 
   return (
-    <CheckboxContext.Provider value={{ isSelected, onChange }}>
+    <CheckboxContext.Provider value={{ isSelected, toggle }}>
       {children}
     </CheckboxContext.Provider>
   );
