@@ -18,7 +18,7 @@ function App() {
 
   const onTextSubmit = (text: string) => {
     setSearchUser(text);
-    console.log(text);
+    console.log(`App.js:${searchUser}`);
   }
 
   return (
@@ -41,6 +41,7 @@ function App() {
       < TextInput label='User name' onTextSubmit={onTextSubmit}/>
       <GitHubUser login={searchUser} />
       <FakeUsers amount={1000}/>
+      {/* <FetchTest login={searchUser}/> */}
     </>
   );
 }

@@ -1,21 +1,28 @@
 import React from "react";
-import Fetch from "./Fetch.tsx";
+import FetchGet from "./FetchGet.tsx";
+import UserDetails from "./UserDetails.tsx";
 
 interface GitHubUserProps {
-    login: string;
+  login: string;
 }
 
-const GitHubUser: React.FC<GitHubUserProps> = ({ login }) => {
-    const renderSuccess = (data: any) => (
-        <div className="githubUser">
-            <h1>{data.login}</h1>
-            <img src={data.avatar_url} alt={data.login} style={{ width: 100 }} />
-            {data.name && <p>{data.name}</p>}
-            {data.location && <p>{data.location}</p>}
-        </div>
+export default function GitHubUser({ login }: GitHubUserProps) {
+
+  console.log("login:", login);
+  const renderSuccess = (data) => {
+    console.log("data:", data);
+    return (
+      <>
+        <UserDetails data={data} />
+      </>
     );
+  }
 
-    return <Fetch url={`https://api.github.com/users/${login}`} renderSuccess={renderSuccess} />;
-};
-
-export default GitHubUser;
+  return (
+    <FetchGet
+      url={`https://api.github.com/users/${login}`}
+      token=""
+      renderSuccess={renderSuccess}
+    />
+  );
+}

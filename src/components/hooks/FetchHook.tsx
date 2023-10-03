@@ -1,41 +1,61 @@
 import { useState, useEffect } from "react";
 
 interface FetchData {
-    loading: boolean;
-    data: any;
-    error: any;
+  loading: boolean;
+  data: any;
+  error: any;
 }
 
-const useFetch = (url: string): FetchData => {
-    const [data, setData] = useState<any>(null);
-    const [error, setError] = useState<any>(null);
-    const [loading, setLoading] = useState<boolean>(false);
+interface UseFetchProps {
+  url: string;
+  method?: string;
+  headers?: HeadersInit // Optional method for requests
+  body?: any; // Optional request body for POST requests
+}
 
-    useEffect(() => {
-        if (!url) return;
+const useFetch = ({ url, method = "GET", headers, body }: UseFetchProps): FetchData => {
+  const [data, setData] = useState<any>(null);
+  const [error, setError] = useState<any>(null);
+  const [loading, setLoading] = useState<boolean>(false);
 
-        setLoading(true);
-        setError(null);
+  useEffect(() => {
+    if (!url) return;
 
-        fetch(url)
-            .then((response) => {
-                if (!response.ok) {
-                    throw new Error("Network response was not ok");
-                }
-                return response.json();
-            })
-            .then((responseData) => {
-                setData(responseData);
-            })
-            .catch((err) => {
-                setError(err);
-            })
-            .finally(() => {
-                setLoading(false);
-            });
-    }, [url]);
+    setLoading(true);
+    setError(null);
 
-    return { loading, data, error };
+    const requestOptions: RequestInit = {
+      method, // Set the HTTP method (default: GET)
+      headers,
+    };
+
+    if (method === "POST" && body) {
+      requestOptions.body = JSON.stringify(body);
+    }
+
+    //  print fetch request to console
+    console.log("url:", url);
+    console.log("requestOptions:", requestOptions);
+    fetch(url, requestOptions)
+      .then((response) => {
+        
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+        return response.json();
+      })
+      .then((responseData) => {
+        setData(responseData);
+      })
+      .catch((err) => {
+        setError(err);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+  }, [url, method, body]);
+
+  return { loading, data, error };
 };
 
 export default useFetch;
